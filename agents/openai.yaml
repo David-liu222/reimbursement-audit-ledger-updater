@@ -1,0 +1,4 @@
+interface:
+  display_name: "费用报销审核与台账登记"
+  short_description: "审核培训费、话费、探亲费和差旅费，并按最终可报金额维护台账"
+  default_prompt: "请审核这批费用报销资料，并在确认准确合规后更新对应台账。"
