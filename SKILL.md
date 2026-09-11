@@ -33,20 +33,29 @@ The user's current written rules and newly supplied valid approvals take priorit
 
 Assign every person/event one state before touching the official-period cells:
 
-- `PASS`: evidence and amount are complete; enter the final reimbursable amount.
-- `PASS_WITH_DEDUCTION`: evidence is complete but a cap or excluded item applies; enter only the reduced amount and report the deduction.
-- `HOLD`: a material document, date, identity, route, amount, or approval conflict remains; do not create a new final ledger entry.
-- `REJECT`: a mandatory substantive condition fails, such as no valid completion certificate under a no-certificate-no-reimbursement rule; do not enter a reimbursable amount.
+- `PASS`: evidence and amount are complete, all reconciliations are `0.00`, and no exception remains; enter the final reimbursable amount directly.
+- `PASS_WITH_DEDUCTION`: evidence is complete and a deterministic cap or clearly excluded item applies, with no unresolved fact or judgment; enter only the reduced amount and report the deduction.
+- `NEEDS_HUMAN_CONFIRMATION`: a document is missing, a fact is unclear, records conflict, or an exception requires judgment; do not create a new final ledger entry until a person confirms this specific case.
+- `REJECT`: the case-specific human confirmation or conclusive evidence establishes that a mandatory condition fails; do not enter a reimbursable amount.
 
 An existing questionable entry is not proof of compliance. Preserve the original template, create a revision copy, and either correct the entry from evidence or flag it for reversal/confirmation. Never silently delete historical data.
+
+## Human Confirmation Gate
+
+Directly register only `PASS` and `PASS_WITH_DEDUCTION` cases. Missing materials, unclear dates/routes/identity/amounts, unsupported exceptions, or conflicting approvals must first become `NEEDS_HUMAN_CONFIRMATION`.
+
+- Do not treat a general instruction to reimburse, a historical ledger row, silence, or an assumed exception as confirmation.
+- Ask for or identify a case-specific human decision. Record the confirmer, confirmation time, confirmed conclusion, and supporting document/message/OA reference.
+- If the person supplies or verifies the missing evidence, or approves a documented exception within their authority, recalculate the final amount and change the state to `PASS` or `PASS_WITH_DEDUCTION`; only then register it.
+- If the person confirms that a mandatory condition is not met, change the state to `REJECT`. If no decision is supplied, keep it pending and out of the final ledger.
 
 ## Required Workflow
 
 1. Inventory the reimbursement packet, policies, OA approvals, ledgers, HR/appointment data, address books, and home-leave filings.
 2. Identify people by employee/person ID first, then name plus department/phone. Resolve duplicate names before calculation.
-3. Audit each category independently and build a person-event table with source amount, exclusions, final amount, decision state, and evidence location.
+3. Audit each category independently and build a person-event table with source amount, exclusions, final amount, decision state, evidence location, and any human-confirmation trail.
 4. Reconcile person totals, category totals, OA/request totals, invoice totals, and proposed ledger totals to two decimal places.
-5. Update only `PASS` and `PASS_WITH_DEDUCTION` items. Keep `HOLD` and `REJECT` items out of new final-period amounts.
+5. Directly update `PASS` and `PASS_WITH_DEDUCTION` items. Route `NEEDS_HUMAN_CONFIRMATION` items for case-specific confirmation, then update only those explicitly converted to a pass state. Keep unresolved and `REJECT` items out of new final-period amounts.
 6. Save a revision copy rather than overwriting the supplied template unless the user explicitly requests in-place editing.
 7. Verify the changed values and compare workbook structure with the source. Preserve formulas, external links, merged cells, freeze panes, validations, hidden rows/columns, print settings, and styles.
 8. Produce a concise audit summary and an exception list. State which ledgers are ready for OA and which are not.
@@ -59,12 +68,14 @@ An existing questionable entry is not proof of compliance. Preserve the original
 - For home leave, keep filed place, proof status, annual scheme, trip number, start/end dates, and reimbursable amount consistent across the master filing table and benefit ledger.
 - For travel, update only the supplied approved travel-ledger template. Do not invent a schema when none is provided.
 - Do not mark OA circulation, approval, or forwarding as complete merely because a workbook was updated.
+- Keep confirmation metadata in an existing status/remarks field or a separate audit sheet/report; do not place names or narrative confirmation text in financial amount cells.
 
 ## Month-End Home-Leave Filing Maintenance
 
 At month end, compare department submissions with the current master table by person ID and classify each row as new, unchanged, changed, or missing evidence.
 
 - Add a new filing only with person/department/position identity and required filing evidence.
+- If required filing evidence is missing or a filed place change is ambiguous, mark the row `NEEDS_HUMAN_CONFIRMATION`; add or change it only after the case-specific confirmation is recorded.
 - For a changed filed place, check whether the person already used the annual benefit and whether the required progressive approval exists.
 - Do not overwrite the prior filed place without retaining a revision copy or change record.
 - If no new department update was supplied, leave the filing table unchanged and say so.
@@ -91,7 +102,8 @@ Return only useful final artifacts:
 
 - revised ledger copy or copies;
 - audit conclusion with final reimbursable totals and deductions;
-- unresolved-items list;
+- unresolved-items list showing exactly what needs human confirmation;
+- confirmation trail for items that were manually cleared before entry;
 - OA/payroll handoff status.
 
 Do not expose OCR dumps, scratch files, raw extracted personal data, or temporary render files. Keep personal identifiers to the minimum needed for audit traceability.

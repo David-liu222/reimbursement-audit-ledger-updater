@@ -15,9 +15,14 @@ Use one row per person-event or person-month with these fields:
 | policy_cap | applicable cap, if any |
 | excluded_amount | unsupported, duplicated, or over-cap amount |
 | final_amount | source amount minus exclusions, capped as required |
-| decision | PASS, PASS_WITH_DEDUCTION, HOLD, or REJECT |
+| decision | PASS, PASS_WITH_DEDUCTION, NEEDS_HUMAN_CONFIRMATION, or REJECT |
 | evidence | filename plus page/sheet/cell |
 | issue | exact missing/conflicting item |
+| confirmation_required | yes/no |
+| confirmation_status | not_needed, pending, confirmed_pass, confirmed_deduction, or confirmed_reject |
+| confirmed_by | case-specific human confirmer, when required |
+| confirmed_at | confirmation date/time, when required |
+| confirmation_basis | supplied evidence, OA item, message, or documented exception basis |
 
 ## 2. Reconciliation controls
 
@@ -29,13 +34,17 @@ Before entry, independently calculate:
 - OA/request total;
 - proposed ledger total.
 
-All differences must be `0.00` before a record becomes `PASS`. A cap deduction is not a reconciliation error when it is explicitly shown as `excluded_amount`.
+All differences must be `0.00` before a record becomes `PASS`. A cap deduction is not a reconciliation error when it is explicitly shown as `excluded_amount`. A missing item or unexplained difference cannot be converted to `0.00` by assumption; it requires human confirmation and, where applicable, supporting evidence.
 
 ## 3. Entry gate
 
 - `PASS`: write `final_amount`.
-- `PASS_WITH_DEDUCTION`: write `final_amount`; report source, cap, and deduction.
-- `HOLD` or `REJECT`: do not write a new final amount. Preserve any pre-existing entry and list the corrective action needed.
+- `PASS_WITH_DEDUCTION`: write `final_amount` only when the deduction is deterministic and no unresolved judgment remains; report source, cap, and deduction.
+- `NEEDS_HUMAN_CONFIRMATION`: do not write a new final amount. State the exact missing material or disputed fact and wait for a case-specific human decision.
+- After human confirmation, record `confirmed_by`, `confirmed_at`, and `confirmation_basis`, recalculate, and change the decision to `PASS`, `PASS_WITH_DEDUCTION`, or `REJECT`. Only a pass state opens the entry gate.
+- `REJECT`: do not write a new final amount. Preserve any pre-existing entry and list the corrective action needed.
+
+The user's standing instruction that manually confirmed cases may later be registered defines the workflow; it is not itself confirmation of any future individual case.
 
 For an already-entered amount that is demonstrably arithmetically wrong, create a revision copy and correct only after the source itemization and OA/request amount agree. Report the old value, new value, and reason.
 

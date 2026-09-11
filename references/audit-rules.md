@@ -6,9 +6,9 @@ These are the current baseline rules distilled from the user's workflow. A newer
 
 - Required evidence: work-request/OA flow, payment proof, training application, invoice, training agreement, and completion/certificate evidence.
 - The application must state whether meals and lodging are included. If included arrangements exceed the approved travel standard, the excess is personal unless separately approved; outside lodging or meal allowance requires the corresponding explanation/approval.
-- No valid certificate or completion evidence means the training cost is not reimbursable under the user's stated rule.
+- If the certificate or completion evidence is missing from the packet, mark the case `NEEDS_HUMAN_CONFIRMATION` and request case-specific verification or supplementary evidence. If human review confirms that no valid certificate exists, mark it `REJECT`; if valid evidence is supplied and all other checks pass, it may become `PASS`.
 - Fuel and toll dates, route, and mileage must agree with the approved training time and location.
-- Reconcile every person's itemized total with the OA/request total and ledger entry. A mismatch remains `HOLD` until corrected.
+- Reconcile every person's itemized total with the OA/request total and ledger entry. A mismatch remains `NEEDS_HUMAN_CONFIRMATION` until corrected or specifically resolved by an authorized person.
 
 ## 电话费
 
