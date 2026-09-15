@@ -33,6 +33,7 @@ Use one row per person-event or person-month with these fields:
 | resolution_basis | supplied evidence, OA item, message, or policy/approval reference |
 | policy_version | rule document and effective date used for the case |
 | primary_document_ids | OA/request, invoice, ticket/order, and payment identifiers used for traceability and deduplication |
+| category_controls | category-specific facts such as current grade, filed place, trip cycle/count, child age, transport modes, lodging cap, or fuel-calculation basis |
 
 ## 2. Reconciliation controls
 
@@ -76,6 +77,10 @@ The user's standing instruction that manually confirmed cases may later be regis
 - Missing invoice, certificate, appointment record, filed-place proof, mileage rule, or unexplained date/route difference: `PENDING_EVIDENCE`; do not register until cleared.
 - Complete facts but an over-standard room, route deviation, or other permitted exception: `PENDING_EXCEPTION_APPROVAL`; do not register until the authorized scoped approval is recorded.
 - Mandatory certificate confirmed absent, duplicate already reimbursed, invalid/voided evidence with no replacement, or denied exception: `REJECT`; do not register.
+
+For home leave, a six-trip cycle, an under-12 zero-count event, and a post-Spring-Festival reset affect `category_controls` and the ledger count, not the amount reconciliation equations. For mixed transport, record modes by direction and apply only the highest applicable one-way cap for that direction.
+
+For training, retain the approved training/travel period, current grade and lodging basis, fuel formula inputs/result, and toll occurrence/invoice dates in `category_controls` or the audit report so the ledger amount remains traceable.
 
 For an already-entered amount that is demonstrably arithmetically wrong, create a revision copy and correct only after the source itemization and OA/request amount agree. Report the old value, new value, and reason.
 

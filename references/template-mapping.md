@@ -10,6 +10,8 @@ Primary current-year sheet: `无任命人员话费福利`.
 - Monthly phone columns are grouped under `电话费`, normally January through December in columns T:AE.
 - Enter monthly final reimbursable amounts. Do not place quarterly totals in one month.
 - Home-leave filed place and trip blocks normally begin at column AF. Read the two header rows to resolve exact start/end/amount triplets.
+- Before appending a home-leave event, reconcile the effective filed place, current grade, approved leave/family-visit period, transport cap, and current cycle's consumed-trip count. Do not infer the count only from nonblank amounts when an under-12 event is marked as non-counting.
+- Write the verified start/end dates and final reimbursable amount only after a pass decision. Preserve or add an audit/remarks record for trip count consumed (`0` for a verified under-12 family visitor), remaining count, cycle/reset basis, and mixed-transport one-way cap when the template permits; otherwise keep these in the linked audit report.
 - The workbook contains external links and historical sheets. A valid narrow edit must preserve them.
 
 ## 培训费报销人员统计.xlsx
@@ -25,6 +27,7 @@ Primary current-year sheet: `2026培训费`.
   - S:U
 - Each triplet is start date, end date, amount. Column V is the nearby remarks area.
 - Match by ID plus name. If the same start/end dates already exist, reconcile that event rather than appending a duplicate.
+- Use the verified training dates matched to the expense explanation and approved training/travel flow. Enter the audited final amount after accommodation, calculated fuel, toll, duplicate, and cap checks.
 - Append only to the first completely blank triplet after the event is `PASS` or `PASS_WITH_DEDUCTION`.
 
 ## 探亲备案地备案统计表.xls

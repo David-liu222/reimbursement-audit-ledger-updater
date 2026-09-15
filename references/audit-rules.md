@@ -17,13 +17,18 @@ Before applying category rules, check:
 
 ## 培训费
 
-- Required evidence: work-request/OA flow, payment proof, training application, invoice, training agreement, and completion/certificate evidence.
+- Required process evidence: the reimbursement/work-request flow plus at least one approved training-application flow or travel flow that covers the participant, purpose, and training dates.
+- Required attachment evidence: expense explanation, payment proof, relevant invoices, stamped training agreement, training certificate/completion evidence, and any claimed toll and fuel receipts. A draft or unstamped agreement does not satisfy the stamped-agreement requirement.
+- Match each participant and the training start/end dates in the expense explanation to the approved training application or travel flow. An unexplained participant or date difference is `PENDING_EVIDENCE`.
 - The application must state whether meals and lodging are included. If included arrangements exceed the approved travel standard, the excess is personal unless separately approved; outside lodging or meal allowance requires the corresponding explanation/approval.
 - Match training provider, agreement, invoice, application, attendee, course, dates, and certificate/completion evidence.
 - If the certificate or completion evidence is missing from the packet, mark the case `PENDING_EVIDENCE` and request supplementary evidence. Under the user's current no-certificate-no-reimbursement rule, a statement that training occurred does not replace a valid certificate. If it cannot be supplied, mark it `REJECT`; only a newer explicit company policy can authorize a different rule.
-- Fuel and toll dates, route, and mileage must agree with the approved training time and location.
-- Check that meals, lodging, transport, fuel, tolls, and allowances included in the training package are not also claimed through travel or another category. Use the approved mileage/fuel rule; if none is supplied, keep that component `PENDING_EVIDENCE`.
+- Check lodging against the effective travel lodging standard for the participant's current grade, destination, eligible nights, room count, and occupants. A missing grade/destination standard is `PENDING_EVIDENCE`; an over-standard stay follows the documented exception-approval path when allowed.
+- Calculate fuel only with the supplied effective fuel-consumption/mileage formula and vehicle/route evidence. Do not substitute the face value of fuel receipts for the calculated eligible amount. If the formula or required mileage inputs are absent, keep the fuel component `PENDING_EVIDENCE`.
+- Toll occurrence dates and invoice issue dates must not precede the covered training journey. They may fall within the training period or after it when they correspond to the return journey or later invoicing. Dates, toll stations, route, and mileage must still agree with the approved training location and journey; an unexplained later date is `PENDING_EVIDENCE`.
+- Check that meals, lodging, transport, fuel, tolls, and allowances included in the training package are not also claimed through travel or another category.
 - Reconcile every person's itemized total using the workflow equations. An unexplained mismatch remains `PENDING_EVIDENCE` until corrected or supported.
+- After the event is `PASS` or eligible `PASS_WITH_DEDUCTION`, update the training ledger with the verified start date, end date, and final reimbursable amount. Do not update a pending or rejected event.
 
 ## 电话费
 
@@ -37,13 +42,18 @@ Before applying category rules, check:
 ## 探亲费
 
 - Focus on authenticity: valid filed place, eligibility, annual scheme, used trip count, and remaining count.
-- Match the approved leave, filing effective date, filed place, annual eligibility, permitted trip count, used trips, and remaining trips before calculating.
+- Compare the claimed filed place with the year-start filing and any later approved change history. Use the filed place effective for the journey date. A mismatch without an approved effective change is `PENDING_EVIDENCE` and is not cured by the reimbursement form alone.
+- Verify the employee's current effective grade against the newest HR/appointment record and use that grade for the applicable home-leave standard. If the filing/ledger grade is stale or the effective grade is unclear, resolve it before calculating.
+- Match the family-visit flow or leave flow to the claimant/traveler, approved start/end dates, filed place, purpose, and route. The detail-sheet start/end dates and every flight, rail, fuel, and toll occurrence date must fall within that approved period, except a specifically explained and independently confirmed work-schedule departure such as the documented night-shift case.
+- Match the approved leave, filing effective date, filed place, annual eligibility, permitted trip count, used trips, and remaining trips before calculating. Use the ledger as the authoritative count record after checking that prior event blocks are not duplicated or omitted.
 - Air and rail tickets must be real-name tickets.
-- Fuel and toll dates must fall within or be explained against the approved leave period; route must match the filed place.
-- When an expense precedes the leave date, require a specific explanation such as a night-shift departure. Do not accept a generic unexplained mismatch.
-- Apply the applicable level/transport cap. Enter only the capped final amount.
+- Reconcile every detail-sheet line to its attachment and require the pre-cap itemized total to equal the matched attachment total. Then apply the effective policy limit; enter only the final capped amount.
+- Apply transport limits per one-way journey. When one direction uses two or more eligible transport modes, use the highest applicable one-way mode limit once; do not add mode limits together. Example: self-driving limit `700` RMB and rail/air limit `1,000` RMB means that direction is capped at `1,000` RMB, with reimbursement still limited to actual eligible cost.
 - For self-driving fuel/tolls, require the applicable mileage/fuel calculation rule and reconcile dates, route, kilometers, fuel quantity/amount, and toll stations. If the rule is missing, keep the affected component `PENDING_EVIDENCE`.
+- For a family visitor under age 12 on the journey start date, eligible home-leave expense may be reimbursed but consumes `0` of the employee's six-trip allowance. A visitor age 12 or older consumes the applicable trip count from the employee's six-trip allowance. Verify identity, relationship, and date of birth; if multiple age-12-or-older visitors share one flow and the ledger counting unit is unclear, use `PENDING_EVIDENCE` rather than inventing a count.
+- Reject the event when the applicable ledger cycle already contains six consumed trips and the new event would exceed six. Do not use the calendar-year boundary alone: keep counting in the current cycle until the company-recognized next-year Spring Festival reset point, then start a new cycle. If the exact annual reset date is not supplied, use `PENDING_EVIDENCE` and request the annual notice/policy date.
 - Check duplicate ticket/invoice/route fingerprints against linked travel reimbursements.
+- After the event is `PASS` or eligible `PASS_WITH_DEDUCTION`, update the home-leave ledger with approved journey dates, final reimbursable amount, trip count consumed, remaining count, applicable cycle, and any under-12 no-count notation. Do not update a pending or rejected event.
 
 ## 差旅费
 
