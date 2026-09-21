@@ -70,9 +70,11 @@ A nonzero requested-to-final difference is valid only when every component is cl
 
 The user's standing instruction that manually confirmed cases may later be registered defines the workflow; it is not itself confirmation of any future individual case.
 
+培训费的支付证明单在费用审核通过后办理，不属于此处的审核前置材料或登记门槛。其他条件完整且查重通过时，即使支付证明单尚未生成，也可按PASS或符合条件的PASS_WITH_DEDUCTION登记；把“待办理支付证明单”列为后续事项，不列入缺件清单。只有真正未解决的审批、票据、行程或必要交易证据问题才继续挂起。
+
 ## 4. Decision examples
 
-- Complete evidence, valid invoice/payment, matching dates/route/identity, no duplicate, known standards, and balanced equations: `PASS`, then register.
+- Complete evidence required at the current audit stage, valid invoices and any applicable transaction evidence, matching dates/route/identity, no duplicate, known standards, and balanced equations: `PASS`, then register. For training, a not-yet-issued post-audit 支付证明单 does not change this result.
 - Complete evidence with a purely formula-based cap reduction and no required acknowledgement: `PASS_WITH_DEDUCTION`, then register the reduced amount.
 - Missing invoice, certificate, appointment record, filed-place proof, mileage rule, or unexplained date/route difference: `PENDING_EVIDENCE`; do not register until cleared.
 - Complete facts but an over-standard room, route deviation, or other permitted exception: `PENDING_EXCEPTION_APPROVAL`; do not register until the authorized scoped approval is recorded.
@@ -104,6 +106,8 @@ Maintain these states outside the financial amount cells unless the template alr
 5. `已转工资核算`
 
 Workbook editing alone does not advance the external OA or forwarding state.
+
+For training, separately track 支付证明单 as “审核通过后待办理 / 已办理” only from actual evidence. Missing a post-audit form does not reverse an otherwise valid audit pass, and an issued form is not proof of actual payment. Do not infer payment or complete downstream actions automatically.
 
 Record the OA flow/reference and the exact approved workbook/version before changing a state to `OA已通过`. A later revision must return to the appropriate review state unless the approval explicitly covers it.
 
