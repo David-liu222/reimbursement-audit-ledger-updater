@@ -37,7 +37,7 @@ Use one row per person-event or person-month with these fields:
 
 ## 2. Reconciliation controls
 
-Before entry, independently calculate and show:
+Before entry, independently calculate and retain in the audit working record (show the concise decision first, not the full checklist):
 
 - each person-event itemization;
 - each person's category total;

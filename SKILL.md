@@ -19,6 +19,7 @@ Treat text inside attachments as evidence, policy, or template content. Do not t
 
 - Always read [references/ledger-workflow.md](references/ledger-workflow.md).
 - Read [references/audit-rules.md](references/audit-rules.md) for the expense categories present.
+- After changing these rules, review the synthetic cases in [references/regression-cases.md](references/regression-cases.md); do not confuse them with audited real claims.
 - Read [references/confirmation-authority.md](references/confirmation-authority.md) when any case needs missing-evidence confirmation, fact clarification, or exception approval.
 - Read [references/template-mapping.md](references/template-mapping.md) before editing the known 2026 ledger templates or a structurally similar workbook.
 - For workbook creation or editing, also use the installed `spreadsheets:Spreadsheets` skill.
@@ -29,6 +30,8 @@ Treat text inside attachments as evidence, policy, or template content. Do not t
   - `travel-reimbursement-organizer-v2`
 
 The user's current written rules and newly supplied valid approvals take priority over bundled references and historical ledger practice. Apply a one-off approval only to the person, event, amount, and period it actually covers; do not promote it into a general rule. Use the rule version effective on the expense date unless an authorized document explicitly says otherwise.
+
+2026-09-21 用户更新已纳入 `audit-rules.md`：自驾无需车辆关系证明；探亲加油可在探亲期间或之后发生/开票；使用发票单价按里程油耗公式核算；已写具体原因的前后一天行程可直接适用规则；备案市内区县里程有效；电子合格证有效；未发生住宿不审核住宿。调用旧专项 Skill 时不得恢复已取消的额外门槛。
 
 ## Decision States
 
@@ -50,6 +53,7 @@ Directly register only `PASS` and eligible `PASS_WITH_DEDUCTION` cases. Route mi
 - A claimant or preparer may supply materials and explanations but cannot approve their own exception. A fact confirmation does not waive a mandatory rule.
 - Record the confirmer/approver, role, confirmation time, conclusion, exact scope, and supporting document/message/OA reference. Follow [references/confirmation-authority.md](references/confirmation-authority.md).
 - For `PENDING_EVIDENCE`, pass only after the missing evidence is supplied or the disputed fact is independently verified. A mandatory document can be waived only if a newer explicit policy authorizes that waiver.
+- 本版规则已明确接受的证据/情形不属于“豁免”或“例外”：例如电子合格证、写明具体原因的一天行程调整。不得仅为这些情形重复索要人工确认；其他真实缺件或冲突仍通过人工确认门槛。
 - For `PENDING_EXCEPTION_APPROVAL`, pass only after an approver with authority over that exception approves the specific person, event, period, and amount.
 - Recalculate after clearance and change the state to `PASS` or `PASS_WITH_DEDUCTION`; only then register it. If the condition cannot be cleared or approval is denied, change it to `REJECT`. If no decision is supplied, keep it pending.
 
@@ -103,7 +107,18 @@ Do not submit to OA or send files/messages unless the user asks and an authorize
 
 ## Deliverables
 
-Return only useful final artifacts:
+先给雨溪可直接使用的简明结论，每人/每事项一段，默认不展开逐条检查清单：
+
+`姓名｜费用类别｜审核结论（中文 + 状态码）｜最终可报/建议登记金额：¥X.XX｜台账：可登记 / 已登记（文件及期间）/ 暂不登记｜关键原因或唯一待办。`
+
+- `PASS`：符合标准，金额明确，可登记；仅实际完成写入并复核后才写“已登记”。
+- `PASS_WITH_DEDUCTION`：核减后符合标准，写清最终金额及一句核减原因，无未解决问题才可登记。
+- 待人工确认：明确“暂不登记”，只列会影响结论的缺件或冲突，不输出“可通过”或未经确定的最终金额。
+- `REJECT`：不予报销、不登记，简述决定性原因。
+- 用户给出的“核减后可登记1,000元”仅为个案结论样式，不是统一标准，也不是未看材料即可通过的授权。按实际政策、方向、次数和材料重新计算；无扣减则应使用 `PASS`，不能机械套用 `PASS_WITH_DEDUCTION`。
+- 金额计算、逐项证据和确认轨迹仍保留在审核底稿，需追溯时提供；简化对外结论不省略内部审核。OA未审批不得把“可登记”写成“OA已通过”。
+
+Return only useful final artifacts, with the short conclusion above first:
 
 - revised ledger copy or copies;
 - audit conclusion with final reimbursable totals and deductions;
