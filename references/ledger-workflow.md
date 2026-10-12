@@ -1,5 +1,15 @@
 # 审核到台账的工作流
 
+## 电话费的范围与金额路径（2026-10-12）
+
+电话费使用最新版人事表核身份手机号、任职调动及起报月，最新版2026电话费/燃油费人员统计表核月标准，服务账期和金额按人月核算。无需OA报销申请依据、公司抬头/发票有效性审核、其他台账发票号/月/金额查重；下面通用字段、方程、示例和确认后的复核不得把这些重新设为门槛。
+
+- `case_id` 用人员稳定标识＋服务月份；OA及发票号可不适用，不为了补齐字段索要这些资料。
+- `requested_amount` 可取本次报销明细，金额输入取可对应到人月的票据/账单；不校验OA申请依据或要求与OA审批额核对。
+- `duplicate_amount` 在本话费范围为“不适用”，不记录“已查无重复”，也不为使通用方程成立而要求查其他台账。话费直接计算 `final_amount = min(人月票据/账单金额, 最新统计表月标准)`，前提是已到HR核定的起报月；汇总及扣减差异仍复算。
+- 目标月格按核定值设置：相同值不再累加，不同值按清楚的修订依据处理；这是登记幂等，不是跨台账发票合规查重。
+- 审核结果及是否可登记只取本类别适用项。后续OA审批和工资转发状态仍据实际发生记录，不因不核OA申请依据就推断已完成。
+
 ## 1. Build the audit table
 
 Use one row per person-event or person-month with these fields:
@@ -48,7 +58,7 @@ Before entry, independently calculate and retain in the audit working record (sh
 - unsupported-requested, duplicate, personal/ineligible, and cap-deduction totals;
 - proposed ledger total.
 
-The following equations must balance to `0.00` before a record can pass:
+The following equations must balance to `0.00` for the categories to which they apply; phone fees use the person-month path above and do not require an OA comparison or cross-ledger duplicate term:
 
 1. `net_evidenced_amount = evidenced_gross_amount - refund_amount`
 2. `eligible_before_cap = net_evidenced_amount - duplicate_amount - personal_or_ineligible_amount`
@@ -87,6 +97,8 @@ For training, retain the approved training/travel period, current grade and lodg
 For an already-entered amount that is demonstrably arithmetically wrong, create a revision copy and correct only after the source itemization and OA/request amount agree. Report the old value, new value, and reason.
 
 ## 5. Duplicate and period checks
+
+以下跨台账/原始凭证查重要求不适用于电话费。电话费仅核本人账期、月标准、HR起报月，以及登记目标格不重复累加；不得因其他台账缺失或未完成发票号/月/金额查重而阻止话费通过。其他类别继续执行以下规则。
 
 - Deduplicate first by invoice code/number, ticket/order number, payment serial, OA/request number, and existing ledger reference. Use person, category, period, route, vendor, and amount only as secondary signals.
 - Treat a matching primary document identifier as a likely duplicate even if the submitted amount changed. Treat matching person/date/amount without a matching primary identifier as a review signal, not conclusive duplication.

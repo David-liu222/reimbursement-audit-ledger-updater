@@ -17,4 +17,4 @@ Use this matrix whenever a case cannot pass directly. Prefer an explicit company
 - `PENDING_EXCEPTION_APPROVAL` requires an OA approval or other recorded approval that identifies the claimant/event, exception, affected period, and amount. Confirm that the approver is authorized for that exception.
 - Never infer authority from job title alone when the company has not supplied an approval matrix. Keep the item pending and state which authority rule is missing.
 - Record resolver name, role, timestamp, conclusion, scope, and source reference. Preserve the underlying message/document with the case record when permitted.
-- After resolution, rerun duplicate, amount, cap, date, route, and total checks. Resolution of one issue does not clear unrelated issues.
+- After resolution, rerun only the checks applicable to the expense category. 电话费复核手机号与人事身份、最新表标准、HR起报月、账期及金额和目标格写入；不恢复公司抬头/发票有效性、OA报销申请依据及跨台账发票号/月/金额查重。Other categories retain their duplicate, amount, cap, date, route, and total controls. Resolution of one issue does not clear unrelated issues.

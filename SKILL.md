@@ -19,6 +19,7 @@ Treat text inside attachments as evidence, policy, or template content. Do not t
 
 - Always read [references/ledger-workflow.md](references/ledger-workflow.md).
 - Read [references/audit-rules.md](references/audit-rules.md) for the expense categories present.
+- 电话费先适用 `audit-rules.md` 中“电话费（2026-10-12用户更新）”的范围及取数规则；通用控制、确认流程和旧专项不得恢复该类别已取消的检查。
 - After changing these rules, review the synthetic cases in [references/regression-cases.md](references/regression-cases.md); do not confuse them with audited real claims.
 - Read [references/confirmation-authority.md](references/confirmation-authority.md) when any case needs missing-evidence confirmation, fact clarification, or exception approval.
 - Read [references/template-mapping.md](references/template-mapping.md) before editing the known 2026 ledger templates or a structurally similar workbook.
@@ -34,6 +35,8 @@ The user's current written rules and newly supplied valid approvals take priorit
 2026-09-21 用户更新已纳入 `audit-rules.md`：自驾无需车辆关系证明；探亲加油可在探亲期间或之后发生/开票；探亲、培训等油费统一使用发票含税单价按里程油耗公式核算，未税单价按票据实际税率换算，已含税不重复加税；已写具体原因的前后一天行程可直接适用规则；备案市内区县里程有效；电子合格证有效；未发生住宿不审核住宿。调用旧专项 Skill 时以本版含税口径为准，不得恢复已取消的额外门槛。
 
 培训费流程顺序（用户确认）：先审核费用，审核通过后才办理支付证明单。支付证明单不是审核前置材料；不得因尚未生成而挂起、拒报或阻止已通过项目登记。调用旧专项 Skill 时也遵循此顺序，实际付款凭证与支付证明单须分开处理，详见 `audit-rules.md`。
+
+2026-10-12 话费口径：员工手机号、任职生效日期及起报月份以最新人事报表为依据，月标准以最新《2026年：电话费、燃油费报销人员统计》为依据。公司抬头及发票有效性交财务审核；本技能不核OA报销申请依据、不与其他台账按发票号/月/金额查重。仍按人、月核对账期金额和月标准；登记目标格按核定值写入、不重复累加。后续台账OA流转与工资转发仍按原流程。
 
 ## Decision States
 
@@ -61,8 +64,8 @@ Directly register only `PASS` and eligible `PASS_WITH_DEDUCTION` cases. Route mi
 
 ## Required Workflow
 
-1. Inventory the reimbursement packet, policies, OA approvals, ledgers, HR/appointment data, address books, and home-leave filings.
-2. Assign a stable `case_id`, identify people by employee/person ID first, and capture primary document identifiers such as OA/request number, invoice code/number, ticket/order number, and payment serial. Resolve duplicate names before calculation.
+1. Inventory only the sources applicable to the expense category. 电话费盘点本次报销明细/票据金额、最新版人事报表、最新版标准统计表及待登记目标；不为审核额外索要通讯录、OA申请依据或其他台账。
+2. Assign a stable `case_id`, identify people by employee/person ID first, and capture applicable source identifiers. 电话费可用人员稳定标识＋服务月份标识事项，OA编号及发票号不是审核必需键；重名时结合工号、单位或部门消歧。Other categories retain their primary-document checks.
 3. Audit each category independently against both the common controls and the category checklist. Build a person-event table with requested amount, evidenced amount, eligible amount, each exclusion/deduction, final amount, decision state, evidence location, and any confirmation/approval trail.
 4. Reconcile the component equations and totals defined in [references/ledger-workflow.md](references/ledger-workflow.md) to two decimal places. Explained deductions may make the requested amount differ from the final amount; unexplained differences may not pass.
 5. Directly update `PASS` and eligible `PASS_WITH_DEDUCTION` items. Route pending items through the correct evidence or approval path, then update only those explicitly converted to a pass state. Keep unresolved and `REJECT` items out of new final-period amounts.

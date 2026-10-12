@@ -6,7 +6,9 @@ These are the current baseline rules distilled from the user's workflow. A newer
 
 ## 所有费用的通用控制
 
-Before applying category rules, check:
+先适用该费用类别的范围。2026-10-12用户确认：电话费不执行以下通用控制中的公司抬头/发票有效性审核、OA报销申请依据审核、与其他台账的发票号/月/金额查重；这些事项交财务或不属本技能范围，不作为电话费挂起、拒报或登记的前置条件。其他类别仍执行各自适用控制。
+
+For the controls applicable to the selected category, check:
 
 - The governing policy/standard is identified by document/version and was effective for the expense date. A later one-off approval applies only to its stated scope.
 - The request/OA basis covers the claimant, purpose, category, dates, route/location, and expected amount. A retrospective request or changed purpose requires the explanation/approval required by current policy.
@@ -44,14 +46,16 @@ Before applying category rules, check:
 - Reconcile every person's itemized total using the workflow equations. An unexplained mismatch remains `PENDING_EVIDENCE` until corrected or supported.
 - After the event is `PASS` or eligible `PASS_WITH_DEDUCTION`, update the training ledger with the verified start date, end date, and final reimbursable amount. Do not update a pending or rejected event.
 
-## 电话费
+## 电话费（2026-10-12用户更新）
 
-- Confirm that the person and monthly standard are supported by the current ledger/policy.
-- A newly appointed team leader starts reimbursement from the following month.
-- The invoice buyer must be the company. Match the billed phone number to the person using the newest address book or approved personnel record.
-- Match the billing/service period to the ledger month; allocate a multi-month bill only when the bill or operator statement supports the monthly split.
-- Verify the appointment effective date and the first eligible month. For transfer, suspension, resignation, dual-role, or other eligibility changes, apply a supplied effective-period rule; otherwise keep the affected month `PENDING_EVIDENCE`.
-- Calculate monthly reimbursable amount as the lesser of invoice amount and monthly standard. Enter the final monthly amount, not the uncapped invoice total. If claimant acknowledgement of a reduction is required by current policy, record it before entry.
+- **分工范围**：无需核对发票公司抬头、购买方税号/地址/银行信息及发票真伪、作废/红冲等有效性，这些由财务审核；本技能的结论写“话费范围审核通过”，不得声称已完成财务发票有效性审核。
+- **不核OA申请依据及跨台账查重**：不要求OA报销申请或其审批依据，不与其他台账按发票号、月份、金额查重；缺OA或其他台账不挂起。此调整仅适用于话费，后续台账OA流转及审批后的工资转发仍保留。
+- **手机号→人事报表**：参照最新版人事报表中姓名对应的本人手机号/联系电话，结合工号、工作单位及部门处理重名，再核对票据手机号。不得采用紧急联系人电话，也不以旧通讯录覆盖人事表。本人手机号缺失、姓名无法唯一匹配或确实不一致时才列人工确认，不自行以发票号码填回人员资料。
+- **月标准→最新统计表**：全部话费人员按最新版《2026年：电话费、燃油费报销人员统计》所载标准审核，不以固定制度金额、旧台账、岗位推断金额覆盖。任命人员取“话费报销标准”；无任命人员有有效数值的“已执行标准”时采用该值，该字段空时采用同一最新版表“话费申请标准”。用户指定的最新版表即为标准依据，不额外索要OA证明；“建议调整标准”不自动作为已执行标准。明确标注未执行、数值缺失或真实冲突时再确认。
+- **任职生效与起报月→人事任职/调动记录**：使用最新版人事报表“任职汇总表”“调动人员明细表”及任职履历，按所报服务月份对应的有效记录核定；不能把入职、发文、合同或统计表审批日期当任职生效日。人事记录明确起报月份时按其执行；新任班组长仍从任职次月起报。相关任职日期缺失或调动时间冲突影响所报月份时才确认，不再索要OA申请依据替代。
+- **按人按月核算**：核对服务账期、票据/明细金额及手机号与人事身份；多月账单仅在有可追溯月度分摊时拆分。金额或账期不可读/不明仍需确认，这是金额核算，不是财务发票有效性审核。
+- 每个有资格月份：`实报金额 = min(该人该月票据/账单金额, 最新统计表月标准)`；不符合起报月份的金额不予纳入。使用最终核定月金额登记，不把季度合计写进一个月，不将未报销的超额部分写入台账。
+- 不做跨台账查重不改变登记目标格的写入方式：同一人同一月再次运行，核定值相同则不重复累加，值不同时说明修订依据。目标写入冲突可待处理，但不标为“发票重复报销”或新增电话费合规缺件。
 
 ## 探亲费
 
