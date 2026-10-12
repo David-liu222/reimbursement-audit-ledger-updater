@@ -5,9 +5,10 @@
 电话费使用最新版人事表核身份手机号、任职调动及起报月，最新版2026电话费/燃油费人员统计表核月标准，服务账期和金额按人月核算。无需OA报销申请依据、公司抬头/发票有效性审核、其他台账发票号/月/金额查重；下面通用字段、方程、示例和确认后的复核不得把这些重新设为门槛。
 
 - `case_id` 用人员稳定标识＋服务月份；OA及发票号可不适用，不为了补齐字段索要这些资料。
-- `requested_amount` 可取本次报销明细，金额输入取可对应到人月的票据/账单；不校验OA申请依据或要求与OA审批额核对。
-- `duplicate_amount` 在本话费范围为“不适用”，不记录“已查无重复”，也不为使通用方程成立而要求查其他台账。话费直接计算 `final_amount = min(人月票据/账单金额, 最新统计表月标准)`，前提是已到HR核定的起报月；汇总及扣减差异仍复算。
-- 目标月格按核定值设置：相同值不再累加，不同值按清楚的修订依据处理；这是登记幂等，不是跨台账发票合规查重。
+- `requested_amount` 可取本次报销明细单列的人月申报金额，金额输入取可对应到人月的票据/账单；不校验OA申请依据或要求与OA审批额核对。不自动将票据额当作较低申报额的补足金额。
+- `duplicate_amount` 在本话费范围为“不适用”，不记录“已查无重复”，也不为使通用方程成立而要求查其他台账。已明确申报时，`final_amount = min(申报金额, 人月票据/账单金额, 最新统计表月标准)`；仅编制票据报销明细而未单列申报时，按票据额与标准两者取低。前提是该服务月具备HR核定的资格；本次核减按申报减核定计算，票据未申报余额单列，不记作扣减。金额、账期等事实未清时不先填最终金额或0。
+- 所报人月资格已经确定时，不额外索要全部任职历史；资格明确不符的月份直接不予报销，只有无法判断资格的月份才挂起。分月状态分别判定，其他已核清月份继续处理。
+- 本次明细、账单与发票对同笔费用仅计一次，不把多种证据相加。目标月格表示完整月度核定总额：完整重算时按核定值设置，相同值不再累加，不同值记录修订依据；收到部分/追加材料时保留原格，先厘清完整月构成及本次写入关系，不能自动覆盖或相加。仅登记操作关系不清可保留审核通过、登记待处理；金额/月限额本身未清则该人月PENDING_EVIDENCE。这些都是本次金额与写入处理，不是跨台账发票合规查重。
 - 审核结果及是否可登记只取本类别适用项。后续OA审批和工资转发状态仍据实际发生记录，不因不核OA申请依据就推断已完成。
 
 ## 1. Build the audit table
@@ -71,7 +72,7 @@ A nonzero requested-to-final difference is valid only when every component is cl
 
 ## 3. Entry gate
 
-- `PASS`: write `final_amount`.
+- `PASS`: write `final_amount` once the target write is resolved. 电话费仅登记关系不明时，保留通过及原目标格，列登记待处理；不是把通过状态改成缺件。
 - `PASS_WITH_DEDUCTION`: write `final_amount` only when the deduction follows a supplied rule without judgment and no required claimant acknowledgement remains; report source, eligibility amount, each deduction, and final amount.
 - `PENDING_EVIDENCE`: do not write a new final amount. State the exact missing material or disputed fact and the evidence or authorized fact confirmation required.
 - `PENDING_EXCEPTION_APPROVAL`: do not write a new final amount. State the policy deviation, amount affected, and required approval level/source.

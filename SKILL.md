@@ -50,6 +50,8 @@ Assign every person/event one state before touching the official-period cells:
 
 An existing questionable entry is not proof of compliance. Preserve the original template, create a revision copy, and either correct the entry from evidence or flag it for reversal/confirmation. Never silently delete historical data.
 
+电话费按“人员＋服务月份”分别判审核状态。身份、起报资格及金额已确定时，仅有级别显示、排序或PDF页序问题列非阻塞提示。审核状态与登记动作分别记录：费用已通过但目标格或完整月总额写入关系待处理时，写“话费范围审核通过，登记待处理”；若月合计是否超标准等金额事实本身未核清，仍PENDING_EVIDENCE。不得因一月待核而将同人其他已核清月份一起挂起。
+
 ## Human Confirmation Gate
 
 Directly register only `PASS` and eligible `PASS_WITH_DEDUCTION` cases. Route missing or disputed evidence to `PENDING_EVIDENCE`; route a known policy deviation to `PENDING_EXCEPTION_APPROVAL` only when the policy allows exceptions.
@@ -68,7 +70,7 @@ Directly register only `PASS` and eligible `PASS_WITH_DEDUCTION` cases. Route mi
 2. Assign a stable `case_id`, identify people by employee/person ID first, and capture applicable source identifiers. 电话费可用人员稳定标识＋服务月份标识事项，OA编号及发票号不是审核必需键；重名时结合工号、单位或部门消歧。Other categories retain their primary-document checks.
 3. Audit each category independently against both the common controls and the category checklist. Build a person-event table with requested amount, evidenced amount, eligible amount, each exclusion/deduction, final amount, decision state, evidence location, and any confirmation/approval trail.
 4. Reconcile the component equations and totals defined in [references/ledger-workflow.md](references/ledger-workflow.md) to two decimal places. Explained deductions may make the requested amount differ from the final amount; unexplained differences may not pass.
-5. Directly update `PASS` and eligible `PASS_WITH_DEDUCTION` items. Route pending items through the correct evidence or approval path, then update only those explicitly converted to a pass state. Keep unresolved and `REJECT` items out of new final-period amounts.
+5. Directly update `PASS` and eligible `PASS_WITH_DEDUCTION` items when the target write is resolved. 电话费若仅登记关系待处理，保留费用通过状态及原格，明确登记待办后再写入。Route pending audit items through the correct evidence or approval path, then update only those explicitly converted to a pass state. Keep unresolved and `REJECT` amounts out of new final-period cells.
 6. Save a revision copy rather than overwriting the supplied template unless the user explicitly requests in-place editing.
 7. Verify the changed values and compare workbook structure with the source. Preserve formulas, external links, merged cells, freeze panes, validations, hidden rows/columns, print settings, and styles.
 8. Produce a concise audit summary and an exception list. State which ledgers are ready for OA and which are not.
@@ -76,7 +78,7 @@ Directly register only `PASS` and eligible `PASS_WITH_DEDUCTION` cases. Route mi
 ## Ledger Editing Rules
 
 - Discover columns from headers and rows from stable identity fields; do not rely on row numbers alone.
-- For monthly phone fees, enter each month's final reimbursable amount in that month's column. Apply `min(invoice amount, monthly standard)` person by person and month by month.
+- For monthly phone fees, enter the complete final reimbursable total in that service month's column. When a submitted person-month amount is explicit, use `min(requested amount, invoice/bill amount, monthly standard)`; when only compiling invoice details, use the invoice/standard ceiling. Preserve existing cells while partial-material write mapping is unresolved; do not accumulate identical reruns or overwrite full totals with partial amounts.
 - For training, use one start/end/amount triplet per event. Reconcile the event amount from itemized evidence before entry. Do not merge unrelated training events.
 - For home leave, keep filed place, proof status, annual scheme, trip number, start/end dates, and reimbursable amount consistent across the master filing table and benefit ledger.
 - For travel, update only the supplied approved travel-ledger template. Do not invent a schema when none is provided.
