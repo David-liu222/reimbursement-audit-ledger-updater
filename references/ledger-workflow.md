@@ -13,6 +13,8 @@
 
 ## 1. Build the audit table
 
+培训/考试先逐页读取本次PDF及扫描页，按人员/事项和材料类型建立“文件＋页码＋关键数据＋核对结论”的证据索引，再列真实缺件。审批、协议、发票、结业或考试证明可能同处一个PDF，不因文件名未命中而判缺。所需数据已可读取时继续完成公式与票据核对，对外给结果及确实未解决的问题，不只复述审核清单。
+
 Use one row per person-event or person-month with these fields:
 
 | Field | Meaning |
@@ -25,6 +27,7 @@ Use one row per person-event or person-month with these fields:
 | event_period | month or start/end dates |
 | requested_amount | amount submitted in the request/OA form |
 | evidenced_gross_amount | face value of case-matched invoices/tickets before refunds and eligibility exclusions |
+| unrequested_evidenced_amount | eligible evidenced balance outside the current requested scope, determined after refund/duplicate/ineligible exclusions per item; not a current-request deduction |
 | refund_amount | refunds, cancellations, credit notes, or returned amounts tied to those documents |
 | eligible_before_cap | net evidenced amount that passes identity, date, route, purpose, and category rules before caps |
 | policy_cap | applicable cap, if any |
@@ -62,13 +65,15 @@ Before entry, independently calculate and retain in the audit working record (sh
 The following equations must balance to `0.00` for the categories to which they apply; phone fees use the person-month path above and do not require an OA comparison or cross-ledger duplicate term:
 
 1. `net_evidenced_amount = evidenced_gross_amount - refund_amount`
-2. `eligible_before_cap = net_evidenced_amount - duplicate_amount - personal_or_ineligible_amount`
+2. For each item, first determine `available_evidenced_amount = net_evidenced_amount - duplicate_amount - personal_or_ineligible_amount`, then `unrequested_evidenced_amount = max(0, available_evidenced_amount - requested_amount)` and `eligible_before_cap = available_evidenced_amount - unrequested_evidenced_amount`. Calculate and sum by item; do not offset one item's excess against another item's shortfall. An unknown requested amount is not zero.
 3. `final_amount = eligible_before_cap - cap_deduction`, never below `0.00`.
 4. `requested_amount - final_amount = documented variance`; identify any `unsupported_requested_amount` within that variance instead of treating it as evidenced expenditure.
 5. `proposed ledger total = sum(final_amount)` for the included cases.
 6. After OA/payment approval, `approved payable total = final ledger total`; before approval, do not claim those totals have reconciled.
 
 A nonzero requested-to-final difference is valid only when every component is classified and explained. Refund, duplicate, personal/ineligible, and cap classifications must be mutually exclusive so the same amount is not deducted twice. A missing item or unexplained difference cannot be converted to zero by assumption.
+
+本次核减以 `requested_amount - final_amount` 为准，未申报票据余额单列，不写成核减；同一支出在说明、发票和计算表中重复出现只计一次。自驾按每项申报额、有效票据额和公式额取低，再合并独立核定的过路费；不得用更高的油票额补足本次较低申报，也不得由小计倒推出过路费充作已核结果。公式额度造成的限制按制度扣减归类并保留逐项依据，不重复扣两遍。
 
 ## 3. Entry gate
 
@@ -89,11 +94,11 @@ The user's standing instruction that manually confirmed cases may later be regis
 - Complete evidence with a purely formula-based cap reduction and no required acknowledgement: `PASS_WITH_DEDUCTION`, then register the reduced amount.
 - Missing invoice, certificate, appointment record, filed-place proof, mileage rule, or unexplained date/route difference: `PENDING_EVIDENCE`; do not register until cleared.
 - Complete facts but an over-standard room, route deviation, or other permitted exception: `PENDING_EXCEPTION_APPROVAL`; do not register until the authorized scoped approval is recorded.
-- Mandatory certificate confirmed absent, duplicate already reimbursed, invalid/voided evidence with no replacement, or denied exception: `REJECT`; do not register.
+- Mandatory completion/examination proof confirmed unavailable and unable to be supplied, with no policy-authorized alternative; duplicate already reimbursed; invalid/voided evidence with no replacement; or denied exception: `REJECT`; do not register. A document merely absent from the current package remains on the evidence-supply path first.
 
 For home leave, a six-trip cycle, an under-12 zero-count event, and a post-Spring-Festival reset affect `category_controls` and the ledger count, not the amount reconciliation equations. For mixed transport, record modes by direction and apply only the highest applicable one-way cap for that direction.
 
-For training, retain the approved training/travel period, current grade and lodging basis, fuel formula inputs/result, and toll occurrence/invoice dates in `category_controls` or the audit report so the ledger amount remains traceable.
+For training/examinations, retain the approved event/travel period and the PDF page index in `category_controls` or the audit report. Lodging records need invoice quantity/unit, service period, rooms/occupants, matched eligible nights and applicable cap. Meal records need the breakfast/other-meal evidence, eligible days, applicable meal rates and deductions. Fuel records need the original explanation amount, actual valid invoice amount, current requested fuel amount, effective mileage, consumption, raw price/tax rate/tax-inclusive price, calculated fuel amount and allowed fuel amount; retain source pages for each input. Itemize toll evidence and allowed toll amount separately, then reconcile the transport subtotal. These are audit results to calculate from existing material, not an automatic missing-evidence checklist.
 
 For an already-entered amount that is demonstrably arithmetically wrong, create a revision copy and correct only after the source itemization and OA/request amount agree. Report the old value, new value, and reason.
 

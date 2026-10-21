@@ -4,6 +4,8 @@ These are the current baseline rules distilled from the user's workflow. A newer
 
 本版包含用户 2026-09-21 明确确认的业务口径。下列已被接受的情形属于正常规则，不是待审批例外；不得被通用核对要求或其他旧版专项 Skill 再次变成缺件。仅更新规则不代表已对某个具体报销包作出通过结论。
 
+2026-10-21 补充培训/考试PDF取证、住宿数量、无早餐餐补及自驾分项核算口径。以下规则应用于具体材料后才能形成审核结论，不预设某一报销包已通过。
+
 ## 所有费用的通用控制
 
 先适用该费用类别的范围。2026-10-12用户确认：电话费不执行以下通用控制中的公司抬头/发票有效性审核、OA报销申请依据审核、与其他台账的发票号/月/金额查重；这些事项交财务或不属本技能范围，不作为电话费挂起、拒报或登记的前置条件。其他类别仍执行各自适用控制。
@@ -25,21 +27,27 @@ For the controls applicable to the selected category, check:
 - 发票明确列出含税单价时直接使用；单价栏为未税价时，按同一油品行的实际税率换算：`含税单价 = 未税单价 ×（1 + 该行税率）`。不得把示例13%当作固定税率；已含税的单价不重复加税。票据明确免税或零税率时按其实际口径计算。
 - 保留原始单价、税率和换算值的精度，先完成里程油耗计算，再将金额四舍五入到分，不先把单价截成两位小数。有折扣时采用票据明确对应的折后含税单价，折扣、退款亦须从有效票据金额中扣除；无法明确归属的折扣或税价信息冲突才转人工确认，不擅自分摊或猜税率，也不以总金额倒推出缺失的单价。
 - `计算油费 = 有效公里数 ÷ 100 × 百公里油耗 × 含税单价`；油费可认可金额仍不超过申报金额、扣除折扣退款后的有效含税票据金额、计算油费三者的最小值。再按对应类别、行程方向和制度限额审核；含税口径明确不免除审批、行程、参数来源和查重要求。
+- **自行取数复算**：先从本次PDF中的路线/里程、车辆及油耗说明、发票行和适用油耗规则取数，记录来源页码。材料已写明且无冲突的有效往返里程、百公里油耗、单价和税率直接用于复算，不把可自行完成的计算列为“待确认油耗”；核对里程方向、是否重复翻倍、油耗单位和适用车辆/标准。只有必要参数确实缺失、不可读或相互矛盾才挂起油费，不猜油耗，也不倒推参数使申报额成立。
+- **分开金额和费用种类**：原说明金额、有效油票额、本次申报油费、公式计算油费、核定油费分别记录；低于票据面额的申报按较低申报额审核，不自动补报差额，也不把未申报余额算作本次核减。过路费另按有效票据逐笔核对，`交通核定小计 = 核定油费 + 核定过路费 + 其他已核准交通费`，再适用该类别限额。不得从交通合计减油费倒推过路费代替核票。
+- 原说明的往返油费高于本次申报额，而用户或当前明细已明确本次仅申报较低金额时，按该申报额复算，不再把原说明金额另加一次或继续询问是否全额申报。原说明数不自动等于有效发票金额；保留说明与本次申报的对应记录，真正影响票据、公式或小计的未解释差异才列待确认。
 
 ## 培训费
 
-- Required process evidence: the reimbursement/work-request flow plus at least one approved training-application flow or travel flow that covers the participant, purpose, and training dates.
-- Required pre-audit attachment evidence: expense explanation, relevant invoices, stamped training agreement, training certificate/completion evidence, and any claimed toll and fuel receipts. A draft or unstamped agreement does not satisfy the stamped-agreement requirement.
+- **先核对完整PDF**：按本次文件清单核查合并PDF全部有关页面；扫描页或提取不到的页需渲染阅读，不能只查文件名、首页或可搜索文字。按“人员/事项—审批—协议—发票—结业或考试证明—住宿—交通—重复报销”建立文件及页码索引，记录已找到、已核对、不可读/冲突、确认缺失或不适用。某项材料藏在合并PDF内，不要求再次单独提供；找到材料仍须核对签批、盖章、人员、日期及金额，不能仅因存在就通过。
+- PDF尚未检查完时，状态应为“材料待读取/核对中”，先继续读取；不据此宣称缺件。全部有关材料核对后，只有确实缺失、不可读或影响结论的冲突才列 `PENDING_EVIDENCE`，注明缺哪一项及查阅范围。审核底稿记录查重范围与结果，未取得相应历史资料时不得声称已完成跨报销查重。
+- Required process evidence: the reimbursement/work-request flow plus at least one approved training/examination-application flow or travel flow that covers the participant, purpose, and event dates.
+- Required pre-audit attachment evidence: expense explanation, relevant invoices, stamped training agreement, completion/certificate or examination evidence appropriate to the approved event, and any claimed lodging, toll and fuel receipts. A draft or unstamped agreement does not satisfy the stamped-agreement requirement. Read these inside the supplied PDFs before requesting replacements.
 - **流程顺序：培训费用审核 → 审核通过 → 办理支付证明单 → 后续支付手续。** 用户确认支付证明单在审核通过后才会有，它不是审核前置材料。其他审核条件全部满足时，判为 `PASS` 或符合条件的 `PASS_WITH_DEDUCTION`，按核定金额及查重规则登记台账；不得仅因无支付证明单转 `PENDING_EVIDENCE`、拒报、要求人工豁免或阻止登记。
 - 支付证明单与银行/微信等实际付款凭证是不同材料。不因支付证明单未生成就一律改要付款截图或银行流水；仅对适用制度明确要求、或解决实际金额/日期/交易对应矛盾所必需的付款证据核验。已有付款截图与发票不匹配等真实问题仍需确认；本条不免除培训申请审批、发票、协议、合格证及行程核对。
 - 审核通过后，将支付证明单标为后续办理事项；取得后核对人员、事项和金额与最终审核结论及台账一致。审核通过、台账已登记、支付证明单已办理、实际已付款分别记录，不能互相替代；生成或提交单据、支付等外部操作仍需用户授权。
 - Match each participant and the training start/end dates in the expense explanation to the approved training application or travel flow. An unexplained participant or date difference is `PENDING_EVIDENCE`.
 - The application must state whether meals and lodging are included. If included arrangements exceed the approved travel standard, the excess is personal unless separately approved; outside lodging or meal allowance requires the corresponding explanation/approval.
-- Match training provider, agreement, invoice, application, attendee, course, dates, and certificate/completion evidence.
+- Match training/examination provider, agreement, invoice, application, attendee, course/exam, dates, and completion/examination evidence. Use evidence appropriate to the approved event; do not demand a second training-completion document when the applicable examination proof already meets that event's requirement.
 - 有可识别且与培训人员、课程对应的电子版合格证，即满足合格证明要求；不得仅因不是纸质原件继续挂起，也不额外要求纸质证书或电子证书再盖章。培训审批仍独立核对，证书通过不等于整个报销包已通过。
-- If neither an electronic nor paper certificate/completion evidence is supplied, mark the case `PENDING_EVIDENCE`. A statement that training occurred does not replace a valid certificate. If it cannot be supplied, mark it `REJECT`; only a newer explicit company policy can authorize a different rule.
-- 仅在发生并申报住宿费时，核对当期差旅标准对应的级别、地点、天数和房间数；不超标即可通过该项。未产生住宿的记为“不适用”，不要求住宿发票、不因缺住宿材料挂起；这不免除培训申请中已有食宿安排的重复报销核对。
-- Calculate fuel only with the supplied effective fuel-consumption/mileage formula and vehicle/route evidence. Apply the tax-inclusive unit-price basis in “油价统一口径” above. Do not substitute the face value of fuel receipts for the calculated eligible amount. If the formula or required mileage inputs are absent, keep the fuel component `PENDING_EVIDENCE`.
+- If no valid electronic or paper completion/certificate/examination evidence appropriate to the event is supplied, mark the case `PENDING_EVIDENCE`. A statement or attendance record alone does not replace the mandatory proof. Mark it `REJECT` only when the required proof is confirmed unavailable and cannot be supplied, with no policy-authorized alternative; a newer explicit company policy may authorize a different rule.
+- 仅在发生并申报住宿费时，核对当期差旅标准对应的级别、地点、住宿数量和房间数。**以住宿发票载明的计费天数/晚数/房晚及单位为依据**，结合发票服务期间、入住人员、房间数和同包住宿明细核对；发票明确写10天时按10个计费天数审核，不另设“必须再证明10晚”的材料门槛，也不把7月21日至7月30日的日期差直接当9晚核减。发票写9晚则按9晚核，再核单价、金额及标准。“间夜”须识别房间数，共住房费只计一次。起止日期只作交叉核对，只有数量、人员、计费范围或金额出现真实矛盾才列具体疑点；发票只列总额时先查同包住宿明细取得数量。未产生住宿的记为“不适用”，不要求住宿发票、不因缺住宿材料挂起；这不免除食宿已包含的重复报销核对。
+- 适用国内差旅全天餐补、酒店证明不含早餐且无其他供餐证据时，按早30元、午60元、晚60元，合计150元/人/有效全天核算，不再因“不含早餐标准未明确”挂起。同包可识别并对应入住的酒店订单或截图写明不含早餐，即可作为早餐依据，不重复索要另一份证明。仍核对已提供的机构/接待供餐安排，确已供餐才扣对应餐次；出发返回日及培训超过一个月、特定地域等已有专项标准按适用规则执行。酒店住宿限额仍按人员级别、地点和发票数量单独核对。
+- Calculate fuel from the supplied effective mileage, fuel-consumption basis and vehicle/route evidence using the formula in “油价统一口径” above. When the inputs are already written in the PDFs, independently calculate the result and compare the requested amount, valid invoice amount and calculated amount; do not merely return “需核对油耗”. Do not substitute the face value of fuel receipts for the calculated eligible amount. Only genuinely absent or conflicting required inputs keep the fuel component `PENDING_EVIDENCE`; tolls are checked separately.
 - Toll occurrence dates and invoice issue dates must not precede the covered training journey. They may fall within the training period or after it when they correspond to the return journey or later invoicing. Dates, toll stations, route, and mileage must still agree with the approved training location and journey; an unexplained later date is `PENDING_EVIDENCE`.
 - 加油费、过路费票据齐全，费用产生日期及开票日期均在培训期间，且与培训行程对应时，交通票据日期项直接通过，不追加延迟开票证明。培训后的票据按上一条判断，不把探亲油费的宽限口径套用于培训，也不将“培训期间即可通过”误写成一律禁止培训后票据。
 - Check that meals, lodging, transport, fuel, tolls, and allowances included in the training package are not also claimed through travel or another category.
@@ -73,7 +81,7 @@ For the controls applicable to the selected category, check:
 - 探亲加油费用产生于探亲期间或探亲后，即通过该项日期审核；相应开票日期在探亲期间或探亲后亦可，不因行程结束后发生或开票而要求补实际加油小票、支付记录、交易明细来证明只是延迟开票。不设置用户未给出的“探亲后最多几天”限制。仍核对票据有效、金额、路线/里程计算及重复报销等其他条件；本条不放宽机票、火车票、过路费的实际行程日期。
 - Match the approved leave, filing effective date, filed place, annual eligibility, permitted trip count, used trips, and remaining trips before calculating. Use the ledger as the authoritative count record after checking that prior event blocks are not duplicated or omitted.
 - Air and rail tickets must be real-name tickets.
-- Reconcile every detail-sheet line to its attachment and require the pre-cap itemized total to equal the matched attachment total. Then apply the effective policy limit; enter only the final capped amount.
+- Reconcile every detail-sheet line to the usable attachment amount within the current requested scope. Record any eligible invoice balance outside that scope separately; the full invoice face value need not equal a lower current request. Apply the effective policy limit to the reconciled eligible amount; enter only the final capped amount.
 - Apply transport limits per one-way journey. When one direction uses two or more eligible transport modes, use the highest applicable one-way mode limit once; do not add mode limits together. Example: self-driving limit `700` RMB and rail/air limit `1,000` RMB means that direction is capped at `1,000` RMB, with reimbursement still limited to actual eligible cost.
 - 自驾即可适用自驾规则，无需核实车辆与申请人的产权、借用或使用关系，不要求借车证明或车主授权。车辆型号、排量、百公里油耗用于计算，不用于增加车辆关系门槛。
 - 按用户图片1及最新含税口径计算：`计算油费（元）= 总公里数 ÷ 100 × 百公里油耗（升/100公里）× 加油发票含税单价（元/升）`，单价取值和换算遵循上文“油价统一口径”。总公里数按实际有效行程汇总；不得将单程重复翻倍，不得自行猜测油耗或以总金额倒推出缺失的单价。记录路线截图、单/往返里程、车辆型号/排量、百公里油耗和发票单价、税率及含税换算的依据。多张不同单价票据需有对应计算分段或已确认的分摊口径，不擅自取最高价。
@@ -87,8 +95,8 @@ For the controls applicable to the selected category, check:
 
 - Lodging must comply with the applicable standard.
 - For employees below manager/deputy-manager level, two people on the same trip may use only one standard room under the user's stated rule.
-- Determine meal allowance from whether the hotel includes breakfast. Under the user's current stated rule, breakfast included corresponds to 150 RMB/day unless a newer policy overrides it.
-- Determine destination/rank lodging cap, eligible nights, transport class, allowance days, and departure/return-day treatment from the supplied effective standard. The known breakfast-included amount does not establish the amount for hotels without breakfast; do not infer it.
+- 国内适用全天餐补为150元/人/天，分早30元、午60元、晚60元。酒店不含早餐且无其他供餐证据时保留早餐补助；含早餐则扣30元，全天仅剩午晚餐时为120元。其他已供餐餐次按对应标准扣除，不得沿用“含早餐仍按150、不含早餐待确认”的旧口径。较新的有效制度或适用专项标准优先。
+- Determine destination/rank lodging cap, eligible nights, transport class, allowance days, and departure/return-day treatment from the supplied effective standard. Verify lodging quantity from the invoice and associated stay details, not solely the inclusive calendar-day count.
 - If two eligible travelers should share one room, reconcile room occupants, dates, room count, and invoice. A separate room or over-standard stay requires the applicable scoped exception approval before reimbursement.
 - Reconcile dates, routes, travelers, lodging nights, tickets, and any linked training/home-leave segments.
 
