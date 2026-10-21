@@ -72,13 +72,17 @@ For the controls applicable to the selected category, check:
 
 ## 探亲费
 
+- **2026-10-21最新范围优先**：以下“无需在PDF另附”不等于取消事实核对；不得以通用材料、旧专项或人工确认规则恢复已取消的上传/说明门槛。
 - Focus on authenticity: valid filed place, eligibility, annual scheme, used trip count, and remaining count.
+- **核对来源而非重复附件**：PDF附件不要求另附探亲审批、备案地备案资料或年度已用/剩余次数截图。有效请假/探亲审批可从关联流程、OA或已有审批记录核验；备案地及变更、年度方案和已用/剩余次数从现有备案表、报销台账及可核记录核验，并在底稿记来源。已能核实的，不因PDF没有这些附件挂起或要求重复上传；确实无法取得必要记录或存在实质冲突时才列具体待办，不把“未随PDF上传”写成“未审批/未备案/次数未核”。仅有流程链接而未读取内容不等于已核。
+- **个人与家属探亲分开**：员工本人探亲无需附亲属证明、亲属关系证明或探亲地证明，不因缺这些证明挂起。仍把申报目的地与现有有效备案记录核对；不另要求户口簿、居住证明等来再次证明已备案地点。家属探亲涉及报销资格及年龄计次，仍核对实际探亲人的身份、与员工关系及出生日期，可用已有可核记录，不将本人探亲的简化扩大为家属资料一律免核。本次不改变新建/变更备案的既有管理流程。
 - Compare the claimed filed place with the year-start filing and any later approved change history. Use the filed place effective for the journey date. A mismatch without an approved effective change is `PENDING_EVIDENCE` and is not cured by the reimbursement form alone.
 - 探亲备案地一般登记到市；目的地为该市下属区、县的，按同一备案地核对，工作地点至该区县的有效路线截图及公里数可采用，不强求到市中心或与市级文字逐字相同。无法确定行政归属或跨备案市时再确认，不虚构具体地址。
 - Verify the employee's current effective grade against the newest HR/appointment record and use that grade for the applicable home-leave standard. If the filing/ledger grade is stale or the effective grade is unclear, resolve it before calculating.
-- 有假条且按适用考勤制度完成签批，即满足请假审批材料要求；也可使用有效家属探亲审批。核对人员、批准期间和探亲行程，不强制要求两种流程同时提供。考勤签批层级依据缺失、签批未完成或存在真实矛盾时再转人工确认。
-- 探亲行程原则上在批准期间内；实际出发或返回可比批准边界提前或推后一天，但必须在报销材料中写明具体原因（如上夜班、中班或其他实际原因）。已有具体原因且无矛盾时按规则直接认可，不另设“独立确认”门槛。未写明具体原因的，结论写“不符合标准，待补充具体原因”，状态 `PENDING_EVIDENCE`，不登记；超一天不自动放行。机票、火车票、过路费按该实际行程窗口核对。
-- 探亲加油费用产生于探亲期间或探亲后，即通过该项日期审核；相应开票日期在探亲期间或探亲后亦可，不因行程结束后发生或开票而要求补实际加油小票、支付记录、交易明细来证明只是延迟开票。不设置用户未给出的“探亲后最多几天”限制。仍核对票据有效、金额、路线/里程计算及重复报销等其他条件；本条不放宽机票、火车票、过路费的实际行程日期。
+- 有假条且按适用考勤制度完成签批，即满足请假审批要求；也可使用有效家属探亲审批。可读取关联流程核对，不强制审批截图在PDF内，也不要求两种流程同时提供。核对人员、批准期间和探亲行程；签批未完成、必要签批权限无法判断或存在真实矛盾时才转人工确认。
+- **自驾过路费路线**：过路票据的起点、终点与本次申报探亲路线对应即可，按去程/返程方向分别核对，返程的起终点按反方向对应。地名及收费站可按能够确定的实际地区对应，不强求文字逐字相同；沿用备案市内区县有效规则。不要求中间高速、收费站序列、导航推荐路线完全一致，不因这些差别追加绕行说明或挂起。分段收费票可合并识别对应方向的整体起终点；明显无关路段或真正不能确定起终点时才列具体问题。油费仍独立按有效公里数、油耗及含税单价复算，起终点项通过不代表油费或整案自动通过。
+- **自驾过路票一天容差**：通行时间在申报/批准期间内，或比对应出发/返回日、批准边界提前或推后一个自然日，且能对应本次探亲往返行程时，日期项直接符合标准。不得再以未写夜班、中班或晚下班等原因为缺件，不索要排班证明、额外说明或单独人工确认；不把通行时间直接改写为原批准日期。该规则只认可一天差异，不自动放行超过一天或无关行程的票据，也不叠加成两天。核对实际通行日期，单纯开票日期不冒充实际行程日期。
+- **其他交通日期保持原口径**：机票、火车票等原则上在有效批准期间；提前或推后一天仍须材料中写明具体原因，有原因且无矛盾直接认可，无原因才待补。不得把自驾过路票的无说明一天容差推广到这些票据。探亲加油费用产生于探亲期间或探亲后，即通过该项日期审核；相应开票日期在探亲期间或探亲后亦可，不因行程结束后发生或开票而要求补实际加油小票、支付记录、交易明细来证明只是延迟开票。不设置用户未给出的“探亲后最多几天”限制。仍核对票据有效、金额、里程油耗及重复报销等其他条件；三类日期口径分别记录。
 - Match the approved leave, filing effective date, filed place, annual eligibility, permitted trip count, used trips, and remaining trips before calculating. Use the ledger as the authoritative count record after checking that prior event blocks are not duplicated or omitted.
 - Air and rail tickets must be real-name tickets.
 - Reconcile every detail-sheet line to the usable attachment amount within the current requested scope. Record any eligible invoice balance outside that scope separately; the full invoice face value need not equal a lower current request. Apply the effective policy limit to the reconciled eligible amount; enter only the final capped amount.

@@ -15,6 +15,8 @@
 
 培训/考试先逐页读取本次PDF及扫描页，按人员/事项和材料类型建立“文件＋页码＋关键数据＋核对结论”的证据索引，再列真实缺件。审批、协议、发票、结业或考试证明可能同处一个PDF，不因文件名未命中而判缺。所需数据已可读取时继续完成公式与票据核对，对外给结果及确实未解决的问题，不只复述审核清单。
 
+探亲费按2026-10-21口径建立来源索引：审批可来自已读取的关联请假/探亲流程，备案地及年度次数可来自已有备案表/台账，不要求在PDF重复附截图；员工本人探亲不索亲属或探亲地证明。记录实际来源、核对结果和当前事件计次，不能从“未上传附件”推断未审批或次数为0，也不能只凭链接声称已核。自驾过路费记对应方向起终点、申报/批准期间、实际通行日期及一天差异的规则依据；中间线路差别和已接受的一天容差不是待确认事项。真实缺来源、终点不符、超出一天或其他未决事实仍按实际问题处理；油费公式和金额另核。月末新建/变更备案管理与本次报销附件要求分开。
+
 Use one row per person-event or person-month with these fields:
 
 | Field | Meaning |
@@ -92,7 +94,7 @@ The user's standing instruction that manually confirmed cases may later be regis
 
 - Complete evidence required at the current audit stage, valid invoices and any applicable transaction evidence, matching dates/route/identity, no duplicate, known standards, and balanced equations: `PASS`, then register. For training, a not-yet-issued post-audit 支付证明单 does not change this result.
 - Complete evidence with a purely formula-based cap reduction and no required acknowledgement: `PASS_WITH_DEDUCTION`, then register the reduced amount.
-- Missing invoice, certificate, appointment record, filed-place proof, mileage rule, or unexplained date/route difference: `PENDING_EVIDENCE`; do not register until cleared.
+- Missing required invoice, certificate, relevant appointment fact, necessary mileage rule, or an unresolved date/route fact outside the accepted category rules: `PENDING_EVIDENCE`; do not register until cleared. Home leave requires a verifiable effective filed place/count, not a duplicate filed-place proof in the claimant PDF; personal home leave does not require relative/place proof. A self-driving toll's accepted endpoint match and one-day difference are not unresolved issues.
 - Complete facts but an over-standard room, route deviation, or other permitted exception: `PENDING_EXCEPTION_APPROVAL`; do not register until the authorized scoped approval is recorded.
 - Mandatory completion/examination proof confirmed unavailable and unable to be supplied, with no policy-authorized alternative; duplicate already reimbursed; invalid/voided evidence with no replacement; or denied exception: `REJECT`; do not register. A document merely absent from the current package remains on the evidence-supply path first.
 
